@@ -1,0 +1,61 @@
+import kinesiologia.*
+
+describe "group of tests for kinesiologia parte 1 y 2" {
+
+  const Leonardo = new Persona(edad=40,nivelDeDolor=10,fortaleza=20)
+  const Milena = new Persona(edad=3,nivelDeDolor=30,fortaleza=50)
+
+  const magneto1 = new Magneto()
+  const bici1 = new Bicicleta()
+  const minitramp1 = new Minitramp()
+
+  test "leonardo puede usar los tres aparatos" {
+    assert.that(Leonardo.puedeUsar(magneto1))
+    assert.that(Leonardo.puedeUsar(bici1))
+    assert.that(Leonardo.puedeUsar(minitramp1))
+  }
+
+  test "milena puede usar un solo aparato" {
+    assert.that(Milena.puedeUsar(magneto1))
+    assert.notThat(Milena.puedeUsar(bici1))
+    assert.notThat(Milena.puedeUsar(minitramp1))
+  }
+
+  test "despues de usar el magneto, le baja el nivel de dolor de leonardo " {
+    Leonardo.usar(magneto1)
+    assert.equals(9, Leonardo.nivelDeDolor())
+  }
+
+  test "despues de usar el magneto, le baja el nivel de dolor de milena " {
+    Milena.usar(magneto1)
+    assert.equals(27, Milena.nivelDeDolor())
+  }
+
+  test "despues de usar la bici, le baja el nivel de dolor y le sube la fortaleza a leonardo " {
+    Leonardo.usar(bici1)
+    assert.equals(6, Leonardo.nivelDeDolor())
+    assert.equals(23, Leonardo.fortaleza())
+  }
+
+  test "despues de usar el minitramp, le sube la fortaleza a leonardo " {
+    Leonardo.usar(minitramp1)
+    assert.equals(24, Leonardo.fortaleza())
+  }
+
+  test "leonardo puede hacer la rutina" {
+    Leonardo.crearRutina([bici1,minitramp1,bici1,magneto1])
+    assert.that(Leonardo.puedeHacerLaRutina())
+  }
+
+  test "leonardo despues de hacer la rutina baja el nivel de dolor y sube su fortaleza" {
+    Leonardo.crearRutina([bici1,minitramp1,bici1,magneto1])
+    Leonardo.hacerRutina()
+    assert.equals(1.8, Leonardo.nivelDeDolor())
+    assert.equals(30, Leonardo.fortaleza())
+  }
+
+  test "milena no puede hacer su rutina" {
+    Milena.crearRutina([magneto1,bici1])
+    assert.notThat(Milena.puedeHacerLaRutina())
+  }
+}

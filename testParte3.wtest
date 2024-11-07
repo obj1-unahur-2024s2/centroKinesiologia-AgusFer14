@@ -1,0 +1,54 @@
+import kinesiologia.*
+
+describe "group of tests for kinesiologia parte 3" {
+
+    const Nicolas = new Resistente(edad=40,nivelDeDolor=10,fortaleza=20)
+    const Victoria = new Caprichosa(edad=30,nivelDeDolor=10,fortaleza=40)
+    const Julian = new Caprichosa(edad=20,nivelDeDolor=54,fortaleza=50)
+    const Zoe = new RapidaRecuperacion(edad=50,nivelDeDolor=14,fortaleza=40,dolorExtra=2)
+
+    const magneto1 = new Magneto(color="verde")
+    const bici1 = new Bicicleta()
+    const minitramp1 = new Minitramp()
+    const biciRoja = new Bicicleta(color="rojo")
+
+    method initialize(){
+    Nicolas.crearRutina([bici1,minitramp1,bici1,magneto1])
+    Victoria.crearRutina([bici1,minitramp1,bici1,magneto1])
+    Julian.crearRutina([biciRoja,magneto1,bici1])
+    Zoe.crearRutina([bici1,minitramp1,bici1,magneto1])
+  }
+  test "nicolas puede hacer su rutina" {
+    assert.that(Nicolas.puedeHacerLaRutina())
+  }
+
+  test "nicolas despues de hacer la rutina baja su dolor y sube su fortaleza" {
+    Nicolas.hacerRutina()
+    assert.equals(1.8, Nicolas.nivelDeDolor())
+    assert.equals(34, Nicolas.fortaleza())
+  }
+
+  test "victoria no puede hacer la rutina" {
+    assert.notThat(Victoria.puedeHacerLaRutina())
+  }
+
+  test "julian puede hacer su rutina" {
+    assert.that(Julian.puedeHacerLaRutina())
+  }
+
+  test "julian despues de hacer la rutina baja su dolor y sube su fortaleza" {
+    Julian.hacerRutina()
+    assert.equals(29.3, Julian.nivelDeDolor())
+    assert.equals(62, Julian.fortaleza())
+  }
+
+  test "zoe puede hacer su rutina" {
+    assert.that(Zoe.puedeHacerLaRutina())
+  }
+
+  test "zoe despues de hacer la rutina baja su dolor y sube su fortaleza" {
+    Zoe.hacerRutina()
+    assert.equals(3.4, Zoe.nivelDeDolor())
+    assert.equals(51, Zoe.fortaleza())
+  }
+}
